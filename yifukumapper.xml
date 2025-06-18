@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.yifukumapper">
+
+    <resultMap id="yifukuResultMap" type="org.example.entity.yifuku">
+        <id property="id" column="id"/>
+        <result property="型号" column="型号"/>
+        <result property="大小" column="大小"/>
+        <result property="颜色" column="颜色"/>
+        <result property="数量" column="数量"/>
+    </resultMap>
+
+    <select id="selectByManufacturerCode" resultMap="yifukuResultMap">
+        SELECT * FROM yifuku
+        WHERE 型号 LIKE CONCAT('%-', #{manufacturerCode})
+    </select>
+    <insert id="insertyifuku" parameterType="org.example.entity.yifuku">
+        INSERT INTO yifuku(型号, 大小, 颜色, 数量)
+        VALUES (#{型号}, #{大小}, #{颜色}, #{数量})
+    </insert>
+
+    <delete id="deleteyifukuById" parameterType="int">
+        DELETE FROM yifuku WHERE id = #{id}
+    </delete>
+    <select id="selectAll" resultType="org.example.entity.yifuku">
+        SELECT id, 型号 , 大小 , 颜色 , 数量
+        FROM yifuku
+    </select>
+
+    <select id="selectByXinghao" parameterType="String" resultType="org.example.entity.yifuku">
+        SELECT id, 型号 , 大小 , 颜色 , 数量
+        FROM yifuku
+        WHERE 型号 = #{型号}
+    </select>
+</mapper>
